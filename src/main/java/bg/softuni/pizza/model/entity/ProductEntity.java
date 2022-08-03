@@ -5,18 +5,23 @@
 package bg.softuni.pizza.model.entity;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
 
 import bg.softuni.pizza.model.enums.ProductCategoryEnum;
 
+@NamedEntityGraph(name = "product-ingredients", attributeNodes = {
+		@NamedAttributeNode("ingredients")
+})
 @Entity
 @Table(name = "products")
 public class ProductEntity extends BaseEntity{
@@ -32,7 +37,7 @@ public class ProductEntity extends BaseEntity{
     private ProductCategoryEnum category;
 	
 	@ManyToMany
-	private Set<IngredientEntity>ingredients = new HashSet<>();
+	private List<IngredientEntity>ingredients = new ArrayList<>();
 	
 	@Column(nullable = true)
 	private String description;
@@ -69,11 +74,11 @@ public class ProductEntity extends BaseEntity{
 		this.category = category;
 	}
 
-	public Set<IngredientEntity> getIngredients() {
+	public List<IngredientEntity> getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(Set<IngredientEntity> ingredients) {
+	public void setIngredients(List<IngredientEntity> ingredients) {
 		this.ingredients = ingredients;
 	}
 

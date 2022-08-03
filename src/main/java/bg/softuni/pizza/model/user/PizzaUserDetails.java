@@ -12,14 +12,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class PizzaUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
+	private final Long id;
 	private final String password;
 	private final String username;
 	private final String firstName;
 	private final String lastName;
 	private final Collection<GrantedAuthority> authorities;
 
-	public PizzaUserDetails(String password, String username, String firstName, String lastName,
+	public PizzaUserDetails(Long id,String password, String username, String firstName, String lastName,
 			Collection<GrantedAuthority> authorities) {
+		this.id = id;
 		this.password = password;
 		this.username = username;
 		this.firstName = firstName;
@@ -27,6 +29,14 @@ public class PizzaUserDetails implements UserDetails {
 		this.authorities = authorities;
 
 	}
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+
 
 	public String getFirstName() {
 		return firstName;

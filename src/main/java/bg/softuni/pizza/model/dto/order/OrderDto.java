@@ -6,25 +6,36 @@ package bg.softuni.pizza.model.dto.order;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 public class OrderDto {
 	
+	@NotNull
 	private Long id;
 	
+	@NotNull
 	private String name;
 	
 	private String imageUrl;
 	
+	@NotNull
     private BigDecimal price;
 	
+    @NotNull
     private String category;
 	
 	private String description;
 	
-	private Integer quantity;
+	@Positive
+	@NotNull
+	private Integer quantity = 1;
 	
+	@NotNull
 	private BigDecimal totalPrice;
 	
-	private String paymentMethod;
+	private String size;
+	
 
 	public Long getId() {
 		return id;
@@ -90,12 +101,19 @@ public class OrderDto {
 		this.totalPrice = totalPrice;
 	}
 
-	public String getPaymentMethod() {
-		return paymentMethod;
+	public String getSize() {
+		return size;
 	}
 
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderDto [id=" + id + ", name=" + name + ", imageUrl=" + imageUrl + ", price=" + price + ", category="
+				+ category + ", description=" + description + ", quantity=" + quantity + ", totalPrice=" + totalPrice
+				+ ", size=" + size + "]";
 	}
 	
 	

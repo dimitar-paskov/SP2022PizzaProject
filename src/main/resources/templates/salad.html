@@ -32,7 +32,11 @@
 		                            <h5 class="fw-bolder fs-6" th:text="|*{price} BGN|"></h5>
 		              </div>
                 
-                    <button class="bg-success choosebtn" type="button">Choose</button>
+                    <div>
+                   <a class="chooselink" href="#" th:href="@{/order/{id}(id=*{id})}"> <button class="bg-success chooselink choosebtn" type="button" 
+                    	>Choose</button>
+                   </a>
+                </div>
             </div>
 
        </div> 

@@ -34,7 +34,7 @@ public class PizzaUserDetailsService implements UserDetailsService{
 	private UserDetails map(UserEntity userEntity) {
 		
 		return new PizzaUserDetails( 
-				
+				userEntity.getId(),
 				userEntity.getPassword(), 
 				userEntity.getEmail(), 
 				userEntity.getFirstName(), 

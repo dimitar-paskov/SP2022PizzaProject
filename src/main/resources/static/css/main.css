@@ -82,6 +82,7 @@ form.main-form {
 
 .card-description{
 	height:140px;
+	overflow: auto;
 }
 
 .choosebtn{
@@ -100,6 +101,10 @@ a:visited { text-decoration: none; }
 a:hover { text-decoration: none; }
 
 a:active { text-decoration: none; }
+
+.hidden{
+	display: none;
+}
 
 /*.input-group {*/
 /*     position: absolute;*/

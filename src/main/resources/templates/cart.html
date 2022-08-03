@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Pizza</title>
+<link rel="stylesheet" href="/css/reset-css.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/main.css" />
+<script src="/js/jquery-3.5.1.slim.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+	<div th:replace="fragments/common :: navbar">Navbar</div>
+
+
+	<div class="container-fluid">
+		<h2 class="text-center text-white mt-5">Orders</h2>
+ 		<div class="row mx-auto d-flex flex-row justify-content-center">
+		<table id="ordersTable" class="table table-striped">
+			<thead class="thead-light">
+				<tr>
+					<th>orderId</th>
+					<th>productName</th>
+					<th>productType</th>
+					<th>productSize</th>
+					<th>dateTimeCreated</th>
+					<th>price</th>
+					<th>quantity</th>
+					<th>totalPrice</th>
+					<th>userFirstName</th>
+					<th>userLastName</th>
+					<th>isOrdered</th>
+					<th>delete</th>
+					<th>order</th>
+				</tr>
+			</thead>
+			<tbody id="orders-container">
+				<tr th:each="order : ${orders}" th:object="${order}">
+					<td th:text="*{id}">orderId</td>
+					<td th:text="*{productName}">productName</td>
+					<td th:text="*{productType}">productType</td>
+					<td th:text="*{productSize}">productSize</td>
+					<td th:text="*{dateTimeCreated}">dateTimeCreated</td>
+					<td th:text="*{price}">price</td>
+					<td th:text="*{quantity}">quantity</td>
+					<td th:text="*{totalPrice}">totalPrice</td>
+					<td th:text="*{userFirstName}">userFirstName</td>
+					<td th:text="*{userLastName}">userLastName</td>
+					<td th:text="*{isOrdered}">isOrdered</td>
+					<td>
+						 <form
+	                                    th:action="@{/order/delete/{orderId}(orderId = *{id})}"
+	                                    th:method="DELETE"
+	                                    th:object="${order}" >
+							<button class="btn-danger">Delete</button> 
+						</form>
+					</td>
+					<td>
+							<form
+		                                    th:action="@{/order/activate/{orderId}(orderId = *{id})}"
+		                                    th:method="POST"
+		                                    th:object="${order}" >
+								<button class="btn-success">Order</button> 
+							</form>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+	</div>
+
+
+	<div class="empty_space bg-blur"></div>
+	<div th:replace="fragments/common :: footer">Footer</div>
+
+
+<script src="/js/deleteFromCart.js"></script>
+</body>
+</html>
