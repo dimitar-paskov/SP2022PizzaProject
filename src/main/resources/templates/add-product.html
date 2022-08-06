@@ -19,7 +19,7 @@
 </header>
 
 <div class="container py-5 h-100">
-	<h2 class="text-center text-white mt-5">Add Product</h2>
+	<h2 class="text-center text-white mt-5" th:text="#{add_product}" >Add Product</h2>
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-xl-7">
             <div class="card" style="border-radius: 1rem;">
@@ -34,7 +34,7 @@
                                     th:object="${product}">
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="name">Name</label>
+                                    <label class="form-label" for="name" th:text="#{name}" >Name</label>
                                     <input th:field="*{name}"
                                            required minlength="2" maxlength="20"
                                            th:errorclass="'is-invalid'"
@@ -48,7 +48,7 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="price">Price</label>
+                                    <label class="form-label" for="price" th:text="#{price}">Price</label>
                                     <input th:field="*{price}"
                                            required
                                            th:errorclass="'is-invalid'"
@@ -66,17 +66,17 @@
                                
 
                                 <div class="form-outline mb-4">
-                                    <label for="category">Category</label>
+                                    <label for="category" th:text="#{category}">Category</label>
                                     <select
                                             th:field="*{category}"
                                             th:errorclass="'is-invalid'"
                                             aria-describedby="categoryError"
                                             required
                                             id="category" class="custom-select">
-                                        <option value="" selected>Select category</option>
-                                        <option value="PIZZA">PIZZA</option>
-                                        <option value="PASTA">PASTA</option>
-                                        <option value="SALAD">SALAD</option>
+                                        
+                                        <option value="PIZZA" th:text="#{pizza}" selected >PIZZA</option>
+                                        <option value="PASTA" th:text="#{pasta}">PASTA</option>
+                                        <option value="SALAD" th:text="#{salad}">SALAD</option>
                                     </select>
                                     <small id="categoryError"
                                            class="invalid-feedback rounded form-text">Category is required.</small>
@@ -84,12 +84,11 @@
                                 
                                  <div class="form-outline mb-4">
                                     <div class="form-group">
-                                        <label for="inputDescription" class="form-label">Description</label>
+                                        <label for="inputDescription" class="form-label" th:text="#{description}">Description</label>
                                         <textarea
                                     th:field="*{description}"
                                     th:errorclass="is-invalid"
                                     name="description"
-                                    required minlength="5"
                                     id="inputDescription"
                                     class="form-control form-control-lg"
                                     aria-describedby="inputDescriptionError">
@@ -102,7 +101,7 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="picture">Picture</label>
+                                    <label class="form-label" for="picture" th:text="#{picture}">Picture</label>
                                     <input
                                             th:field="*{picture}"
                                             th:errorclass="'is-invalid'"
@@ -116,7 +115,7 @@
 
 
                                 <div class="pt-1 mb-4">
-                                    <input type="submit" class="btn btn-dark btn-lg btn-block" value="Add"/>
+                                    <input type="submit" class="btn btn-dark btn-lg btn-block" th:value="#{add}"/>
                                 </div>
 
                             </form>

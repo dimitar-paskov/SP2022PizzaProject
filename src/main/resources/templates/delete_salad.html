@@ -18,7 +18,7 @@
 
 
 	<div class="container-fluid">
-		<h2 class="text-center text-white mt-5">Delete Pizza</h2>
+		<h2 class="text-center text-white mt-5" th:text="#{delete_salad}">Delete Pizza</h2>
 		<div class="offers row mx-auto d-flex flex-row justify-content-center">
 			<div th:each="salad : ${salads}" th:object="${salad}"
 				class="offer card cardeffect col-sm-6 col-md-4  col-lg-2 m-1 p-0">
@@ -38,7 +38,7 @@
 						th:method="DELETE" 
 						th:object="${salad}">
 						
-							<button class="bg-danger chooselink choosebtn">Delete</button>
+							<button class="bg-danger chooselink choosebtn" th:text="#{delete}">Delete</button>
 
 					</form>
 				</div>
