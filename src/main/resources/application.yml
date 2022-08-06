@@ -25,4 +25,10 @@ logging:
 #          descriptor: TRACE
         SQL: DEBUG
       nodeValue: WARN
-    blog: WARN      
+    blog: WARN    
+    
+##Cloudinary Properties
+#cloudinary:
+#  api-key: ${CLOUDINARY_API_KEY}
+#  api-secret: ${CLOUDINARY_API_SECRET}
+#  cloud-name: ${CLOUDINARY_CLOUD_NAME}  

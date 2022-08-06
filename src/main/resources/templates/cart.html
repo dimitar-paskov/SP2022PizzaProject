@@ -18,24 +18,23 @@
 
 
 	<div class="container-fluid">
-		<h2 class="text-center text-white mt-5">Orders</h2>
+		<h2 class="text-center text-white mt-5" th:text="#{orders}">Orders</h2>
  		<div class="row mx-auto d-flex flex-row justify-content-center">
 		<table id="ordersTable" class="table table-striped">
 			<thead class="thead-light">
 				<tr>
-					<th>orderId</th>
-					<th>productName</th>
-					<th>productType</th>
-					<th>productSize</th>
-					<th>dateTimeCreated</th>
-					<th>price</th>
-					<th>quantity</th>
-					<th>totalPrice</th>
-					<th>userFirstName</th>
-					<th>userLastName</th>
-					<th>isOrdered</th>
-					<th>delete</th>
-					<th>order</th>
+					<th th:text="#{orderId}">orderId</th>
+					<th th:text="#{productName}">productName</th>
+					<th th:text="#{productType}">productType</th>
+					<th th:text="#{productSize}">productSize</th>
+					<th th:text="#{dateTimeCreated}">dateTimeCreated</th>
+					<th th:text="#{price}">price</th>
+					<th th:text="#{quantity}">quantity</th>
+					<th th:text="#{totalPrice}">totalPrice</th>
+					<th th:text="#{userFirstName}">userFirstName</th>
+					<th th:text="#{userLastName}">userLastName</th>
+					<th th:text="#{delete_header}">delete</th>
+					<th th:text="#{order_header}">order</th>
 				</tr>
 			</thead>
 			<tbody id="orders-container">
@@ -50,13 +49,12 @@
 					<td th:text="*{totalPrice}">totalPrice</td>
 					<td th:text="*{userFirstName}">userFirstName</td>
 					<td th:text="*{userLastName}">userLastName</td>
-					<td th:text="*{isOrdered}">isOrdered</td>
 					<td>
 						 <form
 	                                    th:action="@{/order/delete/{orderId}(orderId = *{id})}"
 	                                    th:method="DELETE"
 	                                    th:object="${order}" >
-							<button class="btn-danger">Delete</button> 
+							<button class="btn-danger" th:text="#{delete}">Delete</button> 
 						</form>
 					</td>
 					<td>
@@ -64,7 +62,7 @@
 		                                    th:action="@{/order/activate/{orderId}(orderId = *{id})}"
 		                                    th:method="POST"
 		                                    th:object="${order}" >
-								<button class="btn-success">Order</button> 
+								<button class="btn-success" th:text="#{order}">Order</button> 
 							</form>
 
 					</td>

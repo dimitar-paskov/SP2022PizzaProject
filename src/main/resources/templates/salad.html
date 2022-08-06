@@ -18,25 +18,26 @@
 
 
    <div class="container-fluid">
-        <h2 class="text-center text-white mt-5">Salad Offers</h2>
+        <h2 class="text-center text-white mt-5" th:text="#{salad_offers}">Salad Offers</h2>
         <div class="offers row mx-auto d-flex flex-row justify-content-center">
-        	<div th:each="salad : ${salads}" th:object="${salad}" class="offer card cardeffect col-sm-6 col-md-4  col-lg-2 m-1 p-0">            
-                <div class="card-img-top-wrapper">
-                    <img class="card-img-top" th:src="*{imageUrl}" alt="pizza image">
-                </div>
+        	<div th:each="salad : ${salads}" th:object="${salad}" class="offer card cardeffect col-sm-6 col-md-4  col-lg-2 m-1 p-0">  
+        	<a class="chooselink" href="#" th:href="@{/order/{id}(id=*{id})}">          
+	                <div class="card-img-top-wrapper">
+	                    <img class="card-img-top" th:src="*{imageUrl}" alt="pizza image">
+	                </div>
                 
 
                        <div class="text-center">
 		                            <h2 class="fw-bolder text-success" th:text="*{name}"></h2>
-		                            <h5 class="fw-bolder card-description" th:text="*{description}"></h5>
-		                            <h5 class="fw-bolder fs-6" th:text="|*{price} BGN|"></h5>
+		                            <h5 class="fw-bolder card-description text-dark" th:text="*{description}"></h5>
+		                            <h5 class="fw-bolder fs-6 text-dark" th:text="|*{price} BGN|"></h5>
 		              </div>
                 
                     <div>
-                   <a class="chooselink" href="#" th:href="@{/order/{id}(id=*{id})}"> <button class="bg-success chooselink choosebtn" type="button" 
-                    	>Choose</button>
-                   </a>
-                </div>
+                   
+                   		 <button class="bg-success chooselink choosebtn" type="button" th:text="#{choose}">Choose</button>
+                	</div>
+               </a>
             </div>
 
        </div> 
