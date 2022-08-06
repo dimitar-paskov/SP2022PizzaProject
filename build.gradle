@@ -28,6 +28,9 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// https://mvnrepository.com/artifact/com.cloudinary/cloudinary
+	implementation group: 'com.cloudinary', name: 'cloudinary', version: '1.0.14'
+	
 }
 
 tasks.named('test') {

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Pizza</title>
+<link rel="stylesheet" href="/css/reset-css.css" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/main.css" />
+<script src="/js/jquery-3.5.1.slim.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+	<div th:replace="fragments/common :: navbar">Navbar</div>
+
+
+	<div class="container-fluid">
+		<h2 class="text-center text-white mt-5">Delete Pasta</h2>
+		<div class="offers row mx-auto d-flex flex-row justify-content-center">
+			<div th:each="pasta : ${pastas}" th:object="${pasta}"
+				class="offer card cardeffect col-sm-6 col-md-4  col-lg-2 m-1 p-0">
+				<div class="card-img-top-wrapper">
+					<img class="card-img-top" th:src="*{imageUrl}" alt="salad image">
+				</div>
+
+
+				<div class="text-center">
+					<h2 class="fw-bolder text-success" th:text="*{name}"></h2>
+					<h5 class="fw-bolder card-description" th:text="*{description}"></h5>
+					<h5 class="fw-bolder fs-6" th:text="|*{price} BGN|"></h5>
+				</div>
+
+				<div>
+					<form th:action="@{/product/delete/{category}/{productId}(productId=*{id},category=*{category} )}"
+						th:method="DELETE" 
+						th:object="${pasta}">
+						
+							<button class="bg-danger chooselink choosebtn">Delete</button>
+
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+
+	<div class="empty_space bg-blur"></div>
+	<div th:replace="fragments/common :: footer">Footer</div>
+
+
+
+</body>
+</html>

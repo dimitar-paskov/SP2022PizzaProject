@@ -4,16 +4,23 @@
  */
 package bg.softuni.pizza.service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import bg.softuni.pizza.model.dto.order.OrderDto;
+import bg.softuni.pizza.model.dto.product.ProductDto;
 import bg.softuni.pizza.model.entity.IngredientEntity;
 import bg.softuni.pizza.model.entity.ProductEntity;
 import bg.softuni.pizza.model.enums.ProductCategoryEnum;
+import bg.softuni.pizza.model.mapper.ProductMapper;
 import bg.softuni.pizza.model.views.ProductView;
 import bg.softuni.pizza.repository.IngredientRepository;
 import bg.softuni.pizza.repository.ProductRepository;
@@ -24,10 +31,15 @@ public class ProductService {
 
 	private final ProductRepository productRepository;
 	private final IngredientRepository ingredientRepository;
+	private final CloudinaryService cloudinaryService;
+	private final ProductMapper productMapper;
 
-	public ProductService(ProductRepository productRepository, IngredientRepository ingredientRepository) {
+	public ProductService(ProductRepository productRepository, IngredientRepository ingredientRepository,
+			CloudinaryService cloudinaryService, ProductMapper productMapper) {
 		this.productRepository = productRepository;
 		this.ingredientRepository = ingredientRepository;
+		this.cloudinaryService = cloudinaryService;
+		this.productMapper = productMapper; 
 
 	}
 
@@ -293,5 +305,38 @@ public class ProductService {
 
 		return orderDto;
 	}
+
+	public void add(@Valid ProductDto productDto) throws IOException {  
+		  	MultipartFile picture = productDto.getPicture();
+	        String pictureUrl = this.cloudinaryService.uploadPicture(picture);
+	        ProductEntity productEntity = this.productMapper.productDtoToProductEntity(productDto);
+	        productEntity.setImageUrl(pictureUrl);
+	        
+	        String[] ingredientsStringList = productDto.getDescription().split(", ");
+	        
+	        
+	        for (String ingredientString : ingredientsStringList) {
+				
+	        	if(!ingredientRepository.existsByName(ingredientString)) {
+	        		IngredientEntity ingredient = new IngredientEntity();
+	        		ingredient.setName(ingredientString); 
+	        		ingredient = ingredientRepository.save(ingredient);
+	        		
+	        		productEntity.getIngredients().add(ingredient);
+	        	}else {
+	        		IngredientEntity ingredient = ingredientRepository.findByName(ingredientString).orElseThrow(); 
+	        		productEntity.getIngredients().add(ingredient);
+	        	}
+	        	
+	        	
+			}
+	        
+
+	        this.productRepository.save(productEntity);
+	}
+
+	public void deleteProduct(Long productId, UserDetails principal) { 
+		this.productRepository.deleteById(productId);
+ 	}
 
 }
