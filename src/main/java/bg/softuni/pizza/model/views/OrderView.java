@@ -36,7 +36,19 @@ public class OrderView {
 
 	private boolean isOrdered;
 	
+	private String dateTimeStarted;
 	
+	private String dateTimeReady;
+	
+	private Long cookId;
+	
+	private String cookFirstName;
+	
+	private String cookLastName;
+	
+	private boolean isReady;
+	
+	private boolean isStarted;
 
 	public Long getId() {
 		return id;
@@ -148,6 +160,62 @@ public class OrderView {
 
 	public void setOrdered(boolean isOrdered) {
 		this.isOrdered = isOrdered;
+	}
+
+	public String getDateTimeStarted() {
+		return dateTimeStarted;
+	}
+
+	public void setDateTimeStarted(String dateTimeStarted) {
+		this.dateTimeStarted = dateTimeStarted;
+	}
+
+	public String getDateTimeReady() {
+		return dateTimeReady;
+	}
+
+	public void setDateTimeReady(String dateTimeReady) {
+		this.dateTimeReady = dateTimeReady;
+	}
+
+	public Long getCookId() {
+		return cookId;
+	}
+
+	public void setCookId(Long cookId) {
+		this.cookId = cookId;
+	}
+
+	public String getCookFirstName() {
+		return cookFirstName;
+	}
+
+	public void setCookFirstName(String cookFirstName) {
+		this.cookFirstName = cookFirstName;
+	}
+
+	public String getCookLastName() {
+		return cookLastName;
+	}
+
+	public void setCookLastName(String cookLastName) {
+		this.cookLastName = cookLastName;
+	}
+
+	public boolean isReady() {
+		return isReady;
+	}
+
+	public void setReady(boolean isReady) {
+		this.isReady = isReady;
+	}
+
+	public boolean isStarted() {
+		return isStarted;
+	}
+
+	public void setStarted(boolean isStarted) {
+		this.isStarted = isStarted;
 	}
 	
 	

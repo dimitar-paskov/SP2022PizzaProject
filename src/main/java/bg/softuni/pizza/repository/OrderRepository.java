@@ -15,5 +15,7 @@ import bg.softuni.pizza.model.entity.OrderEntity;
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
 	List<OrderEntity> findAllByUserIdAndIsOrdered(Long id,boolean isOrdered);  
+	
+	List<OrderEntity> findAllByIsOrderedAndIsReady(boolean isOrdered, boolean isReady);  
 
 }

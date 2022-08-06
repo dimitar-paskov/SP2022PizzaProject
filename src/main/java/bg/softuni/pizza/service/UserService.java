@@ -56,6 +56,7 @@ public class UserService {
 			UserEntity userEntity = new UserEntity();
 			UserRoleEntity adminRole = this.userRoleRepository.findByUserRole(UserRoleEnum.ADMIN);
 			UserRoleEntity userRole = this.userRoleRepository.findByUserRole(UserRoleEnum.USER);
+			UserRoleEntity cookRole = this.userRoleRepository.findByUserRole(UserRoleEnum.COOK);
 
 			userEntity.setFirstName("User").setLastName("Userov").setEmail("user@example.com").setPassword(this.passwordEncoder.encode("topsecret"))
 					.setUserRoles(List.of(userRole));
@@ -65,6 +66,13 @@ public class UserService {
 			userEntity = new UserEntity();
 			userEntity.setFirstName("Admin").setLastName("Adminov").setEmail("admin@example.com").setPassword(this.passwordEncoder.encode("topsecret"))
 			.setUserRoles(List.of(userRole, adminRole));
+			
+			this.userRepository.save(userEntity);
+			
+			
+			userEntity = new UserEntity();
+			userEntity.setFirstName("Cook").setLastName("Cookinski").setEmail("cook@example.com").setPassword(this.passwordEncoder.encode("topsecret"))
+			.setUserRoles(List.of(cookRole));
 			
 			this.userRepository.save(userEntity);
 			
@@ -79,8 +87,11 @@ public class UserService {
 
 			UserRoleEntity user = new UserRoleEntity();
 			user.setUserRole(UserRoleEnum.USER);
+			
+			UserRoleEntity cook = new UserRoleEntity();
+			cook.setUserRole(UserRoleEnum.COOK);
 
-			this.userRoleRepository.saveAll(Set.of(admin, user));
+			this.userRoleRepository.saveAll(Set.of(admin, user, cook));
 		}
 	}
 

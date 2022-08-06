@@ -57,6 +57,27 @@ public class OrderEntity extends BaseEntity{
 	
 	@Column(nullable = false)
 	private boolean isOrdered;
+	
+	@Column(nullable = true)
+	private LocalDateTime dateTimeStarted;
+	
+	@Column(nullable = true)
+	private LocalDateTime dateTimeReady;
+	
+	@Column(nullable = true)
+	private Long cookId;
+	
+	@Column(nullable = true)
+	private String cookFirstName;
+	
+	@Column(nullable = true)
+	private String cookLastName;
+	
+	@Column(nullable = false)
+	private boolean isReady;
+	
+	@Column(nullable = false)
+	private boolean isStarted;
 
 	public Long getProductId() {
 		return productId;
@@ -160,6 +181,62 @@ public class OrderEntity extends BaseEntity{
 
 	public void setOrdered(boolean isOrdered) {
 		this.isOrdered = isOrdered;
+	}
+
+	public LocalDateTime getDateTimeStarted() {
+		return dateTimeStarted;
+	}
+
+	public void setDateTimeStarted(LocalDateTime dateTimeStarted) {
+		this.dateTimeStarted = dateTimeStarted;
+	}
+
+	public LocalDateTime getDateTimeReady() {
+		return dateTimeReady;
+	}
+
+	public void setDateTimeReady(LocalDateTime dateTimeReady) {
+		this.dateTimeReady = dateTimeReady;
+	}
+
+	public Long getCookId() {
+		return cookId;
+	}
+
+	public void setCookId(Long cookId) {
+		this.cookId = cookId;
+	}
+
+	public String getCookFirstName() {
+		return cookFirstName;
+	}
+
+	public void setCookFirstName(String cookFirstName) {
+		this.cookFirstName = cookFirstName;
+	}
+
+	public String getCookLastName() {
+		return cookLastName;
+	}
+
+	public void setCookLastName(String cookLastName) {
+		this.cookLastName = cookLastName;
+	}
+
+	public boolean isReady() {
+		return isReady;
+	}
+
+	public void setReady(boolean isReady) {
+		this.isReady = isReady;
+	}
+
+	public boolean isStarted() {
+		return isStarted;
+	}
+
+	public void setStarted(boolean isStarted) {
+		this.isStarted = isStarted;
 	}
 	
 	
