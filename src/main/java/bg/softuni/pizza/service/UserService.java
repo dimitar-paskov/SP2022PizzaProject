@@ -1,5 +1,6 @@
 package bg.softuni.pizza.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import bg.softuni.pizza.model.dto.user.UserDto;
 import bg.softuni.pizza.model.dto.user.UserRegisterDTO;
 import bg.softuni.pizza.model.entity.UserEntity;
 import bg.softuni.pizza.model.entity.UserRoleEntity;
@@ -41,6 +43,11 @@ public class UserService {
 
 		UserEntity newUser = userMapper.userDtoToUserEntity(userRegisterDTO);
 		newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+		
+		UserRoleEntity userRole = this.userRoleRepository.findByUserRole(UserRoleEnum.USER);
+		
+		newUser.getUserRoles().add(userRole);
+		
 
 		this.userRepository.save(newUser);
 		login(newUser);
@@ -58,25 +65,23 @@ public class UserService {
 			UserRoleEntity userRole = this.userRoleRepository.findByUserRole(UserRoleEnum.USER);
 			UserRoleEntity cookRole = this.userRoleRepository.findByUserRole(UserRoleEnum.COOK);
 
-			userEntity.setFirstName("User").setLastName("Userov").setEmail("user@example.com").setPassword(this.passwordEncoder.encode("topsecret"))
-					.setUserRoles(List.of(userRole));
+			userEntity.setFirstName("User").setLastName("Userov").setEmail("user@example.com")
+					.setPassword(this.passwordEncoder.encode("topsecret")).setUserRoles(List.of(userRole));
 
 			this.userRepository.save(userEntity);
-			
+
 			userEntity = new UserEntity();
-			userEntity.setFirstName("Admin").setLastName("Adminov").setEmail("admin@example.com").setPassword(this.passwordEncoder.encode("topsecret"))
-			.setUserRoles(List.of(userRole, adminRole));
-			
+			userEntity.setFirstName("Admin").setLastName("Adminov").setEmail("admin@example.com")
+					.setPassword(this.passwordEncoder.encode("topsecret")).setUserRoles(List.of(userRole, adminRole));
+
 			this.userRepository.save(userEntity);
-			
-			
+
 			userEntity = new UserEntity();
-			userEntity.setFirstName("Cook").setLastName("Cookinski").setEmail("cook@example.com").setPassword(this.passwordEncoder.encode("topsecret"))
-			.setUserRoles(List.of(cookRole));
-			
+			userEntity.setFirstName("Cook").setLastName("Cookinski").setEmail("cook@example.com")
+					.setPassword(this.passwordEncoder.encode("topsecret")).setUserRoles(List.of(cookRole));
+
 			this.userRepository.save(userEntity);
-			
-			
+
 		}
 	}
 
@@ -87,7 +92,7 @@ public class UserService {
 
 			UserRoleEntity user = new UserRoleEntity();
 			user.setUserRole(UserRoleEnum.USER);
-			
+
 			UserRoleEntity cook = new UserRoleEntity();
 			cook.setUserRole(UserRoleEnum.COOK);
 
@@ -103,6 +108,126 @@ public class UserService {
 				userDetails.getAuthorities());
 
 		SecurityContextHolder.getContext().setAuthentication(auth);
+	}
+
+	public List<UserDto> findAllUsers() {
+
+		List<UserEntity> userEntities = userRepository.findAll();
+
+		return userEntities.stream().map(this::map).toList();
+	}
+
+	private UserDto map(UserEntity entity) {
+
+		UserDto user = new UserDto();
+
+		user.setId(entity.getId());
+		user.setEmail(entity.getEmail());
+		user.setFirstName(entity.getFirstName());
+		user.setLastName(entity.getLastName());
+
+		user.setAdmin(entity.getUserRoles().stream().map(ur -> ur.getUserRole().name())
+				.filter(r -> r.equalsIgnoreCase("admin")).count() > 0);
+		user.setCook(entity.getUserRoles().stream().map(ur -> ur.getUserRole().name())
+				.filter(r -> r.equalsIgnoreCase("cook")).count() > 0);
+		user.setUser(entity.getUserRoles().stream().map(ur -> ur.getUserRole().name())
+				.filter(r -> r.equalsIgnoreCase("user")).count() > 0);
+
+		return user;
+
+	}
+
+	public void addAdminRole(Long userId) {
+
+		UserEntity user = userRepository.findById(userId).orElseThrow();
+		UserRoleEntity adminRole = this.userRoleRepository.findByUserRole(UserRoleEnum.ADMIN);
+
+		if (user.getUserRoles().stream().map(ur -> ur.getUserRole().name()).filter(r -> r.equalsIgnoreCase("admin"))
+				.count() == 0) {
+
+			user.getUserRoles().add(adminRole);
+			userRepository.save(user);
+		}
+
+	}
+
+	public void addUserRole(Long userId) {
+
+		UserEntity user = userRepository.findById(userId).orElseThrow();
+		UserRoleEntity userRole = this.userRoleRepository.findByUserRole(UserRoleEnum.USER);
+		if (user.getUserRoles().stream().map(ur -> ur.getUserRole().name()).filter(r -> r.equalsIgnoreCase("user"))
+				.count() == 0) {
+			user.getUserRoles().add(userRole);
+			userRepository.save(user);
+		}
+	}
+
+	public void addCookRole(Long userId) {
+
+		UserEntity user = userRepository.findById(userId).orElseThrow();
+		UserRoleEntity cookRole = this.userRoleRepository.findByUserRole(UserRoleEnum.COOK);
+		if (user.getUserRoles().stream().map(ur -> ur.getUserRole().name()).filter(r -> r.equalsIgnoreCase("cook"))
+				.count() == 0) {
+			user.getUserRoles().add(cookRole);
+			userRepository.save(user);
+		}
+	}
+
+	public void removeAdminRole(Long userId) {
+
+		UserEntity user = userRepository.findById(userId).orElseThrow();
+
+		for (Iterator<UserRoleEntity> iterator = user.getUserRoles().iterator(); iterator.hasNext();) {
+
+			UserRoleEntity value = iterator.next();
+			    if (value.getUserRole().equals(UserRoleEnum.ADMIN)) {
+			        iterator.remove();
+			    }
+
+		}
+		
+
+		userRepository.save(user);
+	}
+	
+	
+	public void removeUserRole(Long userId) {
+
+		UserEntity user = userRepository.findById(userId).orElseThrow();
+
+		for (Iterator<UserRoleEntity> iterator = user.getUserRoles().iterator(); iterator.hasNext();) {
+
+			UserRoleEntity value = iterator.next();
+			    if (value.getUserRole().equals(UserRoleEnum.USER)) {
+			        iterator.remove();
+			    }
+
+		}
+		
+
+		userRepository.save(user);
+	}
+	
+	public void removeCookRole(Long userId) {
+
+		UserEntity user = userRepository.findById(userId).orElseThrow();
+
+		for (Iterator<UserRoleEntity> iterator = user.getUserRoles().iterator(); iterator.hasNext();) {
+
+			UserRoleEntity value = iterator.next();
+			    if (value.getUserRole().equals(UserRoleEnum.COOK)) {
+			        iterator.remove();
+			    }
+
+		}
+		
+
+		userRepository.save(user);
+	}
+
+	public void deleteUser(Long userId) { 
+		UserEntity user = userRepository.findById(userId).orElseThrow();
+		userRepository.delete(user); 
 	}
 
 }

@@ -106,6 +106,9 @@ a:active { text-decoration: none; }
 	display: none;
 }
 
+button{
+	border: none;
+}
 
 /*.input-group {*/
 /*     position: absolute;*/

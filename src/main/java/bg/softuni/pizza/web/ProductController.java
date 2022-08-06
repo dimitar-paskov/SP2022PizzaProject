@@ -113,6 +113,8 @@ public class ProductController {
 		return "redirect:/pizzas";
 	}
 	
+
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/product/delete/pizza")
 	public String getDeletePizza(Model model) {
 		
@@ -123,6 +125,7 @@ public class ProductController {
 		return "delete_pizza";
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/product/delete/pasta")
 	public String getDeletePasta(Model model) {
 		
@@ -133,6 +136,7 @@ public class ProductController {
 		return "delete_pasta";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/product/delete/salad")
 	public String getDeleteSalad(Model model) {
 		
@@ -147,7 +151,7 @@ public class ProductController {
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(value = "/product/delete/{category}/{productId}")
-	public String deleteOrder(@PathVariable("productId")  Long productId, @PathVariable("category") String category,  @AuthenticationPrincipal UserDetails principal) {
+	public String deleteProduct(@PathVariable("productId")  Long productId, @PathVariable("category") String category,  @AuthenticationPrincipal UserDetails principal) {
 		
 		
 		productService.deleteProduct(productId,principal);

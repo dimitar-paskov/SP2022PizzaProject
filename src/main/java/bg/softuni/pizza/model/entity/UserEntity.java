@@ -1,9 +1,18 @@
 package bg.softuni.pizza.model.entity;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.Table;
+
+@NamedEntityGraph(name = "user-userRoles", attributeNodes = {
+		@NamedAttributeNode("userRoles")
+})
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
@@ -20,7 +29,7 @@ public class UserEntity extends BaseEntity {
   private boolean isActive;
   private String imageUrl;
 
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany
   private List<UserRoleEntity> userRoles = new ArrayList<>();
 
   public String getEmail() {

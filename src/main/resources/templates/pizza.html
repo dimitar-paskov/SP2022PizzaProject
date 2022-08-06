@@ -23,7 +23,7 @@
         	<div th:each="pizza : ${pizzas}" th:object="${pizza}" class="offer card cardeffect col-sm-6 col-md-4  col-lg-2 m-1 p-0">
         	 <a class="chooselink" href="#" th:href="@{/order/{id}(id=*{id})}">
                 <div class="card-img-top-wrapper">
-                    <img class="card-img-top" th:src="*{imageUrl}" alt="salad image">
+                    <img class="card-img-top" th:src="*{imageUrl}" alt="pizza image">
                 </div>
                 
 
