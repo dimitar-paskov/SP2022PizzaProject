@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/reset-css.css"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
     <script src="/js/jquery-3.5.1.slim.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -28,8 +29,6 @@
                         <div class="card-body p-4 p-lg-5 text-black">
 
                             <form	id="orderForm"
-                                    th:action="@{/orders/new/{id}(id = *{id})}"
-                                    th:method="POST"
                                     th:object="${order}" >
 
                                  <div class="card-img-top-wrapper">

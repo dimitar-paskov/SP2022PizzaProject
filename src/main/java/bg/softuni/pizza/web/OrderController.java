@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,8 @@ public class OrderController {
 		this.productService = productService;
 		this.orderService = orderService;
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/order/{id}")
 	public String getPizza(@PathVariable Long id, Model model) {
 
@@ -47,7 +49,7 @@ public class OrderController {
 		return "order-new";
 	}
 	
-	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/order/{productId}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Void> postNewOrder(@PathVariable("productId")  Long productId, @AuthenticationPrincipal UserDetails principal,
@@ -60,6 +62,7 @@ public class OrderController {
 		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).location(URI.create("/ordersForUser")).build(); 
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/ordersForUser")
 	public String getOrders(Model model,@AuthenticationPrincipal UserDetails principal) {
 
@@ -69,6 +72,7 @@ public class OrderController {
 		return "cart";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping(value = "/order/delete/{orderId}")
 	public String deleteOrder(@PathVariable("orderId")  Long orderId, @AuthenticationPrincipal UserDetails principal) {
 		
@@ -78,14 +82,17 @@ public class OrderController {
 		return "redirect:/ordersForUser"; 
 	}
 	
-	@PostMapping(value = "/order/activate/{orderId}")
-	public String postActivateOrder(@PathVariable("orderId")  Long orderId, @AuthenticationPrincipal UserDetails principal) {
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value = "/order/activateOrder/", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Void> postActivateOrder(@AuthenticationPrincipal UserDetails principal,
+			@RequestBody Long[] orderIds) {
 		
+
+		orderService.activateOrders(orderIds, principal);
+
 		
-		
-		orderService.activateOrder(orderId, principal);
-		
-		return "redirect:/ordersForUser";  
+		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).location(URI.create("/ordersForUser")).build(); 
 	}
 
 }

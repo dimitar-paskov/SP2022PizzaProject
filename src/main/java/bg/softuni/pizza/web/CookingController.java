@@ -6,6 +6,7 @@ package bg.softuni.pizza.web;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ public class CookingController {
 		this.orderService = orderService;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_COOK')")
 	@GetMapping("/cooking/getAllWaitingOrders")
 	public String getAllWaitingOrders(Model model) {
 
@@ -35,6 +37,7 @@ public class CookingController {
 		return "orders_for_cooks";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_COOK')")
 	@GetMapping("/cooking/getCookedOrders")
 	public String getCookedOrders(Model model) {
 		
@@ -44,6 +47,7 @@ public class CookingController {
 		return "cooked_orders";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_COOK')")
 	@PostMapping(value = "/cooking/start/{orderId}")
 	public String startOrder(@PathVariable("orderId")  Long orderId, @AuthenticationPrincipal UserDetails principal) {
 		
@@ -53,6 +57,7 @@ public class CookingController {
 	}
 	
 	
+	@PreAuthorize("hasRole('ROLE_COOK')")
 	@PostMapping(value = "/cooking/stop/{orderId}")
 	public String stopOrder(@PathVariable("orderId")  Long orderId, @AuthenticationPrincipal UserDetails principal) {
 		

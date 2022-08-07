@@ -196,4 +196,25 @@ public class OrderService {
 				
 	}
 
+	public void activateOrders(Long[] orderIds, UserDetails principal) { 
+		
+		
+
+		UserDetails userDetails = pizzaUserDetailsService.loadUserByUsername(principal.getUsername());
+		
+		for (Long orderId : orderIds) { 
+			OrderEntity order = orderRepository.findById(orderId).orElseThrow(() -> new ObjectNotFoundException(orderId));
+			
+			order.setOrdered(true); 
+			order.setDateTimeCreated(LocalDateTime.now()); 
+			
+			if (((PizzaUserDetails) userDetails).getId() == order.getUserId()) {
+
+				orderRepository.save(order);
+			}
+		}
+
+		
+	}
+
 }

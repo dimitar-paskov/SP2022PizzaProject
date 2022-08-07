@@ -49,7 +49,7 @@ async function handleFormSubmission(event){
     fetch(`http://localhost:8080/order/${productId}`,{
         method: "POST",        
         headers:{
-			 'redirect': 'follow',
+			'redirect': 'follow',
             'Content-Type': 'application/json',
             'Accepts': 'application/json',
              [csrfHeaderName]:csrfHeaderValue
