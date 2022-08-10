@@ -44,7 +44,9 @@ async function handleFormSubmission(event){
     }).then(res => {
 	 if (res.redirected) {
             window.location.href = res.url;
-        }	
+        }else{
+			 alert("There was an error sending the order.Maybe it was expired! Please refresh the page and try again");
+		}	
     });
        
 

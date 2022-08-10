@@ -16,6 +16,8 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
 	List<OrderEntity> findAllByUserIdAndIsOrdered(Long id,boolean isOrdered);  
 	
-	List<OrderEntity> findAllByIsOrderedAndIsReady(boolean isOrdered, boolean isReady);  
+	List<OrderEntity> findAllByIsOrderedAndIsReady(boolean isOrdered, boolean isReady);
+		
+	List<OrderEntity> findAllByIsOrdered(boolean isOrdered);  
 
 }

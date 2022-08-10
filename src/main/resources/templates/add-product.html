@@ -73,23 +73,23 @@
                                            class="invalid-feedback rounded form-text">Category is required.</small>
                                 </div>
                                 
-                                 <div class="form-outline mb-4">
-                                    <div class="form-group">
-                                        <label for="inputDescription" class="form-label" th:text="#{description}">Description</label>
-                                        <textarea
-                                    th:field="*{description}"
-                                    th:errorclass="is-invalid"
-                                    name="description"
-                                    id="inputDescription"
-                                    class="form-control form-control-lg"
-                                    aria-describedby="inputDescriptionError">
-                            </textarea>
-                                        <small id="inputDescriptionError"
-                                               class="invalid-feedback rounded form-text">
-                                            Description length must be more than 5 symbols.</small>
-                                    </div>
-
-                                </div>
+		                        <div class="form-outline mb-4">
+		                                    <div class="form-group">
+		                                        <label for="inputDescription" class="form-label" th:text="#{ingredients}">Ingredients</label>
+		                                        <textarea
+		                                    th:field="*{description}"
+		                                    th:errorclass="is-invalid"
+		                                    name="description"
+		                                    id="inputDescription"
+		                                    class="form-control form-control-lg"
+		                                    aria-describedby="inputDescriptionError">
+		                            </textarea>
+		                                        <small id="inputDescriptionError"
+		                                               class="invalid-feedback rounded form-text">
+		                                            Description length must be more than 5 symbols.</small>
+		                                    </div>
+		
+		                       </div>
 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="picture" th:text="#{picture}">Picture</label>

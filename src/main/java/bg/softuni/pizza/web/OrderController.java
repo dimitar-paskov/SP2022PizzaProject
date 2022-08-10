@@ -4,9 +4,11 @@
  */
 package bg.softuni.pizza.web;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -85,14 +87,16 @@ public class OrderController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/order/activateOrder/", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Void> postActivateOrder(@AuthenticationPrincipal UserDetails principal,
-			@RequestBody Long[] orderIds) {
+	public void postActivateOrder(HttpServletResponse response,@AuthenticationPrincipal UserDetails principal,
+			@RequestBody Long[] orderIds) throws IOException { 
 		
 
 		orderService.activateOrders(orderIds, principal);
+		
+		response.sendRedirect("/ordersForUser");
 
 		
-		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).location(URI.create("/ordersForUser")).build(); 
+//		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).location(URI.create("/ordersForUser")).build(); 
 	}
 
 }

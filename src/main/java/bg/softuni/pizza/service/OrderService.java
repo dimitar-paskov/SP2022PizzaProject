@@ -7,6 +7,8 @@ package bg.softuni.pizza.service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -74,10 +76,11 @@ public class OrderService {
 		view.setCookId(entity.getCookId());
 		view.setCookFirstName(entity.getCookFirstName());
 		view.setCookLastName(entity.getCookLastName());
-		view.setDateTimeStarted(entity.getDateTimeStarted()==null? "" :entity.getDateTimeStarted().format(formatter));
-		view.setDateTimeReady(entity.getDateTimeReady() ==null? "" : entity.getDateTimeReady().format(formatter)); 
+		view.setDateTimeStarted(
+				entity.getDateTimeStarted() == null ? "" : entity.getDateTimeStarted().format(formatter));
+		view.setDateTimeReady(entity.getDateTimeReady() == null ? "" : entity.getDateTimeReady().format(formatter));
 		view.setReady(entity.isReady());
-		view.setStarted(entity.isStarted()); 
+		view.setStarted(entity.isStarted());
 
 		return view;
 
@@ -119,7 +122,7 @@ public class OrderService {
 		orderEntity.setUserId(((PizzaUserDetails) userDetails).getId());
 		orderEntity.setUserFirstName(((PizzaUserDetails) userDetails).getFirstName());
 		orderEntity.setUserLastName(((PizzaUserDetails) userDetails).getLastName());
-		orderEntity.setReady(false); 
+		orderEntity.setReady(false);
 		orderEntity.setStarted(false);
 
 		orderRepository.save(orderEntity);
@@ -142,8 +145,8 @@ public class OrderService {
 	public void activateOrder(Long orderId, @AuthenticationPrincipal UserDetails principal) {
 
 		OrderEntity order = orderRepository.findById(orderId).orElseThrow(() -> new ObjectNotFoundException(orderId));
-		
-		order.setOrdered(true); 
+
+		order.setOrdered(true);
 
 		UserDetails userDetails = pizzaUserDetailsService.loadUserByUsername(principal.getUsername());
 
@@ -152,31 +155,30 @@ public class OrderService {
 			orderRepository.save(order);
 		}
 	}
-	
+
 	public List<OrderView> findWaitingOrders() {
 
 		List<OrderEntity> orders = orderRepository.findAllByIsOrderedAndIsReady(true, false);
 
 		return orders.stream().map(this::map).toList();
 	}
-	
+
 	public List<OrderView> findCookedOrders() {
 
 		List<OrderEntity> orders = orderRepository.findAllByIsOrderedAndIsReady(true, true);
 
 		return orders.stream().map(this::map).toList();
 	}
-	
 
 	public void startCooking(Long orderId, UserDetails principal) {
-		
+
 		OrderEntity order = orderRepository.findById(orderId).orElseThrow(() -> new ObjectNotFoundException(orderId));
-		
-		order.setDateTimeStarted(LocalDateTime.now()); 
-		order.setStarted(true); 
+
+		order.setDateTimeStarted(LocalDateTime.now());
+		order.setStarted(true);
 
 		UserDetails userDetails = pizzaUserDetailsService.loadUserByUsername(principal.getUsername());
-		
+
 		order.setCookId(((PizzaUserDetails) userDetails).getId());
 		order.setCookFirstName(((PizzaUserDetails) userDetails).getFirstName());
 		order.setCookLastName(((PizzaUserDetails) userDetails).getLastName());
@@ -184,37 +186,55 @@ public class OrderService {
 		orderRepository.save(order);
 
 	}
- 
-	public void stopCooking(Long orderId, UserDetails principal) { 
-		
+
+	public void stopCooking(Long orderId, UserDetails principal) {
+
 		OrderEntity order = orderRepository.findById(orderId).orElseThrow(() -> new ObjectNotFoundException(orderId));
-		
-		order.setDateTimeReady(LocalDateTime.now()); 
-		order.setReady(true); 
+
+		order.setDateTimeReady(LocalDateTime.now());
+		order.setReady(true);
 
 		orderRepository.save(order);
-				
+
 	}
 
-	public void activateOrders(Long[] orderIds, UserDetails principal) { 
-		
-		
+	public void activateOrders(Long[] orderIds, UserDetails principal) {
 
 		UserDetails userDetails = pizzaUserDetailsService.loadUserByUsername(principal.getUsername());
-		
-		for (Long orderId : orderIds) { 
-			OrderEntity order = orderRepository.findById(orderId).orElseThrow(() -> new ObjectNotFoundException(orderId));
-			
-			order.setOrdered(true); 
-			order.setDateTimeCreated(LocalDateTime.now()); 
-			
+
+		for (Long orderId : orderIds) {
+			OrderEntity order = orderRepository.findById(orderId)
+					.orElseThrow(() -> new ObjectNotFoundException(orderId));
+
+			order.setOrdered(true);
+			order.setDateTimeCreated(LocalDateTime.now());
+
 			if (((PizzaUserDetails) userDetails).getId() == order.getUserId()) {
 
 				orderRepository.save(order);
 			}
 		}
 
+	}
+
+	public void removeUnactiveOrders() {
 		
+		System.out.println("in OrderService.removeUnactiveOrders");
+
+		List<OrderEntity> unactiveOrders = orderRepository.findAllByIsOrdered(false);
+
+		List<OrderEntity> ordersForDelete = new ArrayList<>();
+
+		for (OrderEntity order : unactiveOrders) {
+
+			if (order.getDateTimeCreated().until(LocalDateTime.now(), ChronoUnit.MINUTES) > 0) {
+				ordersForDelete.add(order);
+			}
+
+		}
+
+		orderRepository.deleteAll(ordersForDelete);
+
 	}
 
 }
