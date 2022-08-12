@@ -12,8 +12,6 @@ let totalPriceForAllOrders = document.getElementById('totalPriceForAllOrders');
 let totalPriceSum = 0;
 for (let i = 0; i < totalPriceList.length ; i++) {
 	
-//console.log(((+totalPriceList[i].textContent)*100)/100);
-	
     totalPriceSum += +totalPriceList[i].textContent; 
 }
 totalPriceForAllOrders.textContent =  Math.round((totalPriceSum) * 100/100).toFixed(2);
@@ -44,9 +42,7 @@ async function handleFormSubmission(event){
     }).then(res => {
 	 if (res.redirected) {
             window.location.href = res.url;
-        }else{
-			 alert("There was an error sending the order.Maybe it was expired! Please refresh the page and try again");
-		}	
+        }	
     });
        
 

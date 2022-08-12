@@ -100,9 +100,9 @@ public class IngredientService {
 			pesto.setName("pesto"); 
 			ingredients.add(pesto);
 			
-			IngredientEntity parmigano = new IngredientEntity();
-			parmigano.setName("parmigano"); 
-			ingredients.add(parmigano);
+			IngredientEntity parmigiano = new IngredientEntity();
+			parmigiano.setName("parmigiano"); 
+			ingredients.add(parmigiano);
 			
 			IngredientEntity basel = new IngredientEntity();
 			basel.setName("basel"); 

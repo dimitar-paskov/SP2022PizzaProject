@@ -6,18 +6,26 @@ package bg.softuni.pizza.model.dto.product;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class ProductDto {
 	
+	@NotNull
+	@NotEmpty
 	private String name;
 	
 	private String imageUrl;
 	
+	@NotNull
     private BigDecimal price;
 	
+	@NotNull
     private String category;
     
+	@NotNull
 	private String description;
 	
 	private MultipartFile picture;

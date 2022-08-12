@@ -29,6 +29,7 @@ import bg.softuni.pizza.model.dto.order.OrderDto;
 import bg.softuni.pizza.model.views.OrderView;
 import bg.softuni.pizza.service.OrderService;
 import bg.softuni.pizza.service.ProductService;
+import bg.softuni.pizza.service.exception.ObjectNotFoundException;
 
 @Controller
 public class OrderController {
@@ -90,13 +91,25 @@ public class OrderController {
 	public void postActivateOrder(HttpServletResponse response,@AuthenticationPrincipal UserDetails principal,
 			@RequestBody Long[] orderIds) throws IOException { 
 		
-
+		try {
 		orderService.activateOrders(orderIds, principal);
+		}catch(ObjectNotFoundException e) {
+			response.sendRedirect("/ordersForUserWithErrorMessage");
+			return;
+		}
 		
 		response.sendRedirect("/ordersForUser");
 
-		
-//		return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).location(URI.create("/ordersForUser")).build(); 
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/ordersForUserWithErrorMessage")
+	public String getOrdersWithErrorMessage(Model model,@AuthenticationPrincipal UserDetails principal) {
+
+		List<OrderView> orders = orderService.findOrdersForCurrentUser(principal);
+
+		model.addAttribute("orders", orders);
+		return "cart_with_error_msg";
 	}
 
 }

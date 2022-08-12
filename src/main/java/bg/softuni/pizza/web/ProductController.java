@@ -34,6 +34,13 @@ public class ProductController {
 		this.productService = productService;
 
 	}
+	
+	@GetMapping("/")
+	public String getIndex() {
+
+		return "redirect:/pizzas";
+	}
+	
 
 	@GetMapping("/pizzas")
 	public String getPizza(Model model) {
@@ -67,11 +74,7 @@ public class ProductController {
 		return "salad";
 	}
 
-	@GetMapping("/")
-	public String getIndex() {
 
-		return "redirect:/pizzas";
-	}
 
 	@GetMapping("/product/add")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -72,7 +72,7 @@ public class UserService {
 
 			userEntity = new UserEntity();
 			userEntity.setFirstName("Admin").setLastName("Adminov").setEmail("admin@example.com")
-					.setPassword(this.passwordEncoder.encode("topsecret")).setUserRoles(List.of(userRole, adminRole));
+					.setPassword(this.passwordEncoder.encode("topsecret")).setUserRoles(List.of(userRole, adminRole, cookRole));
 
 			this.userRepository.save(userEntity);
 

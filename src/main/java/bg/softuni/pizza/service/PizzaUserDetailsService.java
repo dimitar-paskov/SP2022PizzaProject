@@ -42,14 +42,7 @@ public class PizzaUserDetailsService implements UserDetailsService{
 				userEntity.getUserRoles().stream().map(this::map).toList()
 			);
 		
-		
-//		return User.builder()
-//				.username(userEntity.getEmail())
-//				.password(userEntity.getPassword())
-//				.authorities(userEntity.getUserRoles().stream().map(this::map).toList())
-//				.build();
 
-		
 	}
 	
 	private GrantedAuthority map(UserRoleEntity userRole) {

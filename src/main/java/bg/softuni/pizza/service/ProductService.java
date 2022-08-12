@@ -122,7 +122,7 @@ public class ProductService {
 			ingredients.add(ingredientRepository.findByName("tomatoJuice").get());
 			ingredients.add(ingredientRepository.findByName("mozzarella").get());
 			ingredients.add(ingredientRepository.findByName("pesto").get());
-			ingredients.add(ingredientRepository.findByName("parmigano").get());
+			ingredients.add(ingredientRepository.findByName("parmigiano").get());
 			ingredients.add(ingredientRepository.findByName("freshTomatoes").get());
 			ingredients.add(ingredientRepository.findByName("basel").get());
 			italiana.setImageUrl(
@@ -167,7 +167,7 @@ public class ProductService {
 			ingredients.add(ingredientRepository.findByName("cream").get());
 			ingredients.add(ingredientRepository.findByName("bacon").get());
 			ingredients.add(ingredientRepository.findByName("mushrooms").get());
-			ingredients.add(ingredientRepository.findByName("parmigano").get());
+			ingredients.add(ingredientRepository.findByName("parmigiano").get());
 			pastaCarbonara.setImageUrl(
 					"https://res.cloudinary.com/dofeaskyi/image/upload/v1659454651/projectPizza/pasta/pasta_carbonara_u5wfgu.png");
 			pastaCarbonara.setPrice(BigDecimal.valueOf(16.00));
@@ -180,7 +180,7 @@ public class ProductService {
 			ingredients.add(ingredientRepository.findByName("pasta").get());
 			ingredients.add(ingredientRepository.findByName("tomatoJuice").get());
 			ingredients.add(ingredientRepository.findByName("pesto").get());
-			ingredients.add(ingredientRepository.findByName("parmigano").get());
+			ingredients.add(ingredientRepository.findByName("parmigiano").get());
 			pastaNapolitana.setImageUrl(
 					"https://res.cloudinary.com/dofeaskyi/image/upload/v1659454651/projectPizza/pasta/pasta_napolitana_x2dte0.png");
 			pastaNapolitana.setPrice(BigDecimal.valueOf(16.00));
@@ -194,7 +194,7 @@ public class ProductService {
 			ingredients.add(ingredientRepository.findByName("tomatoJuice").get());
 			ingredients.add(ingredientRepository.findByName("cream").get());
 			ingredients.add(ingredientRepository.findByName("peperoni").get());
-			ingredients.add(ingredientRepository.findByName("parmigano").get());
+			ingredients.add(ingredientRepository.findByName("parmigiano").get());
 			pastaPeperoni.setImageUrl(
 					"https://res.cloudinary.com/dofeaskyi/image/upload/v1659454651/projectPizza/pasta/pasta_peperoni_lesbrj.png");
 			pastaPeperoni.setPrice(BigDecimal.valueOf(16.00));
@@ -207,7 +207,7 @@ public class ProductService {
 			ingredients.add(ingredientRepository.findByName("pasta").get());
 			ingredients.add(ingredientRepository.findByName("emental").get());
 			ingredients.add(ingredientRepository.findByName("cream").get());
-			ingredients.add(ingredientRepository.findByName("parmigano").get());
+			ingredients.add(ingredientRepository.findByName("parmigiano").get());
 			pastaMacAndCheese.setImageUrl(
 					"https://res.cloudinary.com/dofeaskyi/image/upload/v1659454651/projectPizza/pasta/pasta_mac_and_cheese_lbgupu.png");
 			pastaMacAndCheese.setPrice(BigDecimal.valueOf(16.00));
@@ -220,7 +220,7 @@ public class ProductService {
 			ingredients.add(ingredientRepository.findByName("iceberg").get());
 			ingredients.add(ingredientRepository.findByName("arugula").get());
 			ingredients.add(ingredientRepository.findByName("freshTomatoes").get());
-			ingredients.add(ingredientRepository.findByName("parmigano").get());
+			ingredients.add(ingredientRepository.findByName("parmigiano").get());
 			ingredients.add(ingredientRepository.findByName("olives").get());
 			saladRoca.setImageUrl(
 					"https://res.cloudinary.com/dofeaskyi/image/upload/v1659456843/projectPizza/salad/salad_roca_ny8shp.png");
@@ -247,7 +247,7 @@ public class ProductService {
 			ingredients.add(ingredientRepository.findByName("iceberg").get());
 			ingredients.add(ingredientRepository.findByName("chickenBreastMeat").get());
 			ingredients.add(ingredientRepository.findByName("corn").get());
-			ingredients.add(ingredientRepository.findByName("parmigano").get());
+			ingredients.add(ingredientRepository.findByName("parmigiano").get());
 			saladCesare.setImageUrl(
 					"https://res.cloudinary.com/dofeaskyi/image/upload/v1659456843/projectPizza/salad/salad_cesare_qndqte.png");
 			saladCesare.setPrice(BigDecimal.valueOf(16.00));
