@@ -219,7 +219,6 @@ public class OrderService {
 
 	public void removeUnactiveOrders() {
 		
-		System.out.println("in OrderService.removeUnactiveOrders");
 
 		List<OrderEntity> unactiveOrders = orderRepository.findAllByIsOrdered(false);
 

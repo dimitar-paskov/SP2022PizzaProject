@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import bg.softuni.pizza.model.dto.order.OrderDto;
 import bg.softuni.pizza.model.entity.IngredientEntity;
 import bg.softuni.pizza.model.entity.ProductEntity;
 import bg.softuni.pizza.model.enums.ProductCategoryEnum;
@@ -41,40 +43,44 @@ public class ProductServiceTest {
 	
 	private ProductService toTest;
 	
+	private static final IngredientEntity ingr1, ingr2, ingr3, ingr4, ingr5, ingr6;
+	
+	static{
+		ingr1 = new IngredientEntity();
+		ingr1.setId(1L);
+		ingr1.setName("tomatoes");
+		
+		ingr2 = new IngredientEntity();
+		ingr2.setId(2L);
+		ingr2.setName("chesee");
+		
+		ingr3 = new IngredientEntity();
+		ingr3.setId(3L);
+		ingr3.setName("basil");
+		
+		ingr4 = new IngredientEntity();
+		ingr4.setId(4L);
+		ingr4.setName("meat");
+		
+		ingr5 = new IngredientEntity();
+		ingr5.setId(5L);
+		ingr5.setName("chicken");
+		
+		ingr6 = new IngredientEntity();
+		ingr6.setId(6L);
+		ingr6.setName("corn");
+		
+	}
+	
 	@BeforeEach
 	void setUp() {
 		toTest = new ProductService( mockProductRepository, mockIngredientRepository, mockCloudinaryService, mockProductMapper );
+		
 	}
 	
 	@Test
 	void test_findAllPizzas_shouldReturnAllPizzas() {
-		
-		IngredientEntity ingr1 = new IngredientEntity();
-		ingr1.setId(1L);
-		ingr1.setName("tomatoes");
-		
-		IngredientEntity ingr2 = new IngredientEntity();
-		ingr2.setId(2L);
-		ingr2.setName("chesee");
-		
-		IngredientEntity ingr3 = new IngredientEntity();
-		ingr3.setId(3L);
-		ingr3.setName("basil");
-		
-		IngredientEntity ingr4 = new IngredientEntity();
-		ingr4.setId(4L);
-		ingr4.setName("meat");
-		
-		IngredientEntity ingr5 = new IngredientEntity();
-		ingr5.setId(5L);
-		ingr5.setName("chicken");
-		
-		IngredientEntity ingr6 = new IngredientEntity();
-		ingr6.setId(6L);
-		ingr6.setName("corn");
-		
-		
-		
+				
 		ProductEntity pizza1 = new ProductEntity();
 		pizza1.setCategory(ProductCategoryEnum.PIZZA);
 		pizza1.setName("pizza1");
@@ -124,32 +130,7 @@ public class ProductServiceTest {
 	@Test
 	void test_findAllPasta_shouldReturnAllPasta() {
 		
-		IngredientEntity ingr1 = new IngredientEntity();
-		ingr1.setId(1L);
-		ingr1.setName("tomatoes");
-		
-		IngredientEntity ingr2 = new IngredientEntity();
-		ingr2.setId(2L);
-		ingr2.setName("chesee");
-		
-		IngredientEntity ingr3 = new IngredientEntity();
-		ingr3.setId(3L);
-		ingr3.setName("basil");
-		
-		IngredientEntity ingr4 = new IngredientEntity();
-		ingr4.setId(4L);
-		ingr4.setName("meat");
-		
-		IngredientEntity ingr5 = new IngredientEntity();
-		ingr5.setId(5L);
-		ingr5.setName("chicken");
-		
-		IngredientEntity ingr6 = new IngredientEntity();
-		ingr6.setId(6L);
-		ingr6.setName("corn");
-		
-		
-		
+
 		ProductEntity pasta1 = new ProductEntity();
 		pasta1.setCategory(ProductCategoryEnum.PASTA);
 		pasta1.setName("pasta1");
@@ -200,31 +181,6 @@ public class ProductServiceTest {
 	@Test
 	void test_findAllSalads_shouldReturnAllSalads() {
 		
-		IngredientEntity ingr1 = new IngredientEntity();
-		ingr1.setId(1L);
-		ingr1.setName("tomatoes");
-		
-		IngredientEntity ingr2 = new IngredientEntity();
-		ingr2.setId(2L);
-		ingr2.setName("chesee");
-		
-		IngredientEntity ingr3 = new IngredientEntity();
-		ingr3.setId(3L);
-		ingr3.setName("basil");
-		
-		IngredientEntity ingr4 = new IngredientEntity();
-		ingr4.setId(4L);
-		ingr4.setName("meat");
-		
-		IngredientEntity ingr5 = new IngredientEntity();
-		ingr5.setId(5L);
-		ingr5.setName("chicken");
-		
-		IngredientEntity ingr6 = new IngredientEntity();
-		ingr6.setId(6L);
-		ingr6.setName("corn");
-		
-		
 		
 		ProductEntity salad1 = new ProductEntity();
 		salad1.setCategory(ProductCategoryEnum.SALAD);
@@ -269,6 +225,37 @@ public class ProductServiceTest {
 		Assertions.assertEquals(8, allSaladsReturned.get(1).getId());
 		Assertions.assertTrue(allSaladsReturned.get(2).getName().equals("salad3"));
 		Assertions.assertEquals(9, allSaladsReturned.get(2).getId());
+		
+	}
+	
+	@Test
+	void test_findById_shouldReturnOrderDto() { 
+		
+		
+		ProductEntity salad = new ProductEntity();
+		salad.setCategory(ProductCategoryEnum.SALAD);
+		salad.setName("salad1");
+		salad.setImageUrl("http://image.com/image");
+		salad.setPrice(BigDecimal.valueOf(20.00));
+		salad.setId(10L);
+		salad.setIngredients(List.of(ingr1, ingr2));
+
+		
+		
+		when(mockProductRepository.findById(10L)).thenReturn(Optional.of(salad));
+		
+		
+		OrderDto orderDto = toTest.findAById(10L);
+		
+		
+		Assertions.assertEquals(10L, orderDto.getId());
+		Assertions.assertEquals("salad1", orderDto.getName());
+		Assertions.assertEquals("http://image.com/image", orderDto.getImageUrl());
+		Assertions.assertEquals(BigDecimal.valueOf(20.00), orderDto.getPrice());
+		Assertions.assertEquals(ProductCategoryEnum.SALAD.name(), orderDto.getCategory());
+		
+		
+		
 		
 	}
 	

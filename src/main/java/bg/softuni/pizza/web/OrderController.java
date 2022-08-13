@@ -44,9 +44,9 @@ public class OrderController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/order/{id}")
-	public String getPizza(@PathVariable Long id, Model model) {
+	public String getOrderWithProductId(@PathVariable("id") Long productId, Model model) {
 
-		OrderDto order = productService.findAById(id);
+		OrderDto order = productService.findAById(productId);
 
 		model.addAttribute("order", order);
 		return "order-new";
@@ -57,8 +57,6 @@ public class OrderController {
 	@ResponseBody
 	public ResponseEntity<Void> postNewOrder(@PathVariable("productId")  Long productId, @AuthenticationPrincipal UserDetails principal,
 			@RequestBody @Valid OrderDto orderDto) {
-		
-		System.out.println(orderDto);
 		
 		orderService.createOrder(orderDto,principal);
 		
