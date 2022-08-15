@@ -9,6 +9,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
     defer-datasource-initialization: true
   sql:
     init:

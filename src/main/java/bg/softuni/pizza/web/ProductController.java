@@ -79,10 +79,12 @@ public class ProductController {
 	@GetMapping("/product/add")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String getAddProductForm(Model model) {
-
-		ProductDto product = new ProductDto();
-
-		model.addAttribute("product", product);
+		
+		
+		if(!model.containsAttribute("product")) {			
+			ProductDto product = new ProductDto();
+			model.addAttribute("product", product);
+		}
 
 		return "add-product";
 	}
@@ -93,10 +95,10 @@ public class ProductController {
 			RedirectAttributes redirectAttributes) throws IOException {
 
 		if (bindingResult.hasErrors()) {
-			redirectAttributes.addFlashAttribute("product", productDto).addFlashAttribute(
-					"org.springframework.validation.BindingResult.ProductDto", bindingResult);
+			redirectAttributes.addFlashAttribute("product", productDto);
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.product", bindingResult);
 
-			return "redirect:/products/add";
+			return "redirect:/product/add";
 		}
 
 		this.productService.add(productDto);

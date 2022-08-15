@@ -20,6 +20,7 @@ public class OrderDto {
 	private String imageUrl;
 	
 	@NotNull
+	@Positive
     private BigDecimal price;
 	
     @NotNull

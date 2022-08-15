@@ -226,7 +226,7 @@ public class OrderService {
 
 		for (OrderEntity order : unactiveOrders) {
 
-			if (order.getDateTimeCreated().until(LocalDateTime.now(), ChronoUnit.MINUTES) > 0) {
+			if (order.getDateTimeCreated().until(LocalDateTime.now(), ChronoUnit.MINUTES) > 1440) {
 				ordersForDelete.add(order);
 			}
 

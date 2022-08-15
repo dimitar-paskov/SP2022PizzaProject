@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,7 @@ public class ProductDto {
 	private String imageUrl;
 	
 	@NotNull
+	@Positive
     private BigDecimal price;
 	
 	@NotNull
